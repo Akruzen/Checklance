@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Checklance</string>
+    <string name="add_keywords">Add Keywords</string>
+    <string name="add_keywords_text">Add Keywords</string>
 </resources>
