@@ -3,4 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="dynamic_artwork">#009688</color>
+    <color name="icon_background">@color/black</color>
+    <color name="icon_foreground">#F5ECB9</color>
+    <color name="icon_foreground_variant">#430000</color>
+    <color name="icon_foreground_accent">#002335</color>
 </resources>
