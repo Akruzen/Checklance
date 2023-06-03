@@ -17,7 +17,7 @@ public class AddBankFragment extends DialogFragment implements DialogInterface.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_FRAME, com.google.android.material.R.style.Theme_Material3_DynamicColors_DayNight);
+        setStyle(STYLE_NO_FRAME, R.style.Base_Theme_Checklance);
     }
 
     @Override
