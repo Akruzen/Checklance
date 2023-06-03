@@ -3,6 +3,8 @@
     <style name="Base.Theme.Checklance" parent="Theme.Material3.DynamicColors.DayNight">
         <!-- Customize your dark theme here. -->
         <item name="android:fontFamily">@font/product_sans</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
     </style>
 </resources>
