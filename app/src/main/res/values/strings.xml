@@ -3,4 +3,12 @@
     <string name="add_bank_desc">Add Bank</string>
     <string name="add_bank">Add Bank</string>
     <string name="add_a_bank">Add a Bank</string>
+    <string name="message_details">In the following section please refer to the transactional messages you get from your bank (debited and credited amount messages). Note that this is the only way by which bank balance will be tracked, so please fill out the details without typographical errors. If you need any help regarding any particular section of the field, tap the question mark icon.
+    </string>
+    <string name="sender_name">Enter either the complete name or part of that name. For example in case of Bank of Baroda,
+        if you receive messages from AX-BOBTXN, AD-BOBTXN, TX-BOBTXN, etc. then you can either put the common part
+        \"BOBTXN\" as the name of the Sender. This will help the app filter out and differentiate
+        transactional messages of a particular bank.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

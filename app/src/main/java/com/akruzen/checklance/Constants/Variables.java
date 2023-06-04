@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class Common {
+public class Variables {
 
     private static final List<String> bankList = Arrays.asList(
             "State Bank of India", "Punjab National Bank", "Bank of Baroda", "ICICI Bank", "HDFC Bank",
@@ -13,14 +13,9 @@ public class Common {
             "IDBI Bank Limited", "IDFC FIRST Bank", "Indian Bank", "Central Bank of India",
             "Indian Overseas Bank", "Bank of Maharashtra", "IDBI Bank", "Punjab & Sind Bank"
     );
-    private static final String addBankFragmentTag = "addBankFrag";
 
     public static List<String> getBankList () {
         Collections.sort(bankList);
         return bankList;
-    }
-
-    public static String getAddBankFragmentTag() {
-        return addBankFragmentTag;
     }
 }

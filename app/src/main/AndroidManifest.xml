@@ -29,6 +29,14 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".AddBankActivity"
+            android:exported="true"/>
+
+        <activity
+            android:name=".MessageDetailsActivity"
+            android:exported="true"/>
+
         <receiver android:name=".classes.SMSReceiver"
             android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
