@@ -1,114 +1,144 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="16dp"
     tools:context=".MessageDetailsActivity">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/nextButton2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/add_bank_desc"
+                android:text="@string/add_bank"
+                android:textSize="@dimen/large_heading"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/add_bank_desc"
+                android:text="Message Details"
+                android:textSize="@dimen/small_heading" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:contentDescription="@string/add_bank_desc"
+                android:text="@string/message_details"
+                android:textSize="@dimen/medium_body" />
+
+            <ImageView
+                android:id="@+id/message_art_svg"
+                android:layout_width="200dp"
+                android:layout_height="112dp"
+                android:layout_marginVertical="32dp"
+                android:src="@drawable/message"
+                android:visibility="visible" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="16dp"
+                android:hint="Senders Name"
+                app:counterEnabled="true"
+                app:counterMaxLength="20"
+                app:errorEnabled="true"
+                app:startIconDrawable="@drawable/outline_person_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/senderNameEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/outline_help_outline_24"
+                    android:drawableTint="?attr/colorAccent"
+                    android:maxLength="20"
+                    android:singleLine="true" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Sample Credit Message"
+                app:counterEnabled="true"
+                app:counterMaxLength="70"
+                app:errorEnabled="true"
+                app:startIconDrawable="@drawable/outline_sms_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/outline_help_outline_24"
+                    android:drawableTint="?attr/colorAccent"
+                    android:maxLength="70"
+                    android:maxLines="5" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="16dp"
+                android:hint="Sample Debit Message"
+                app:counterEnabled="true"
+                app:counterMaxLength="70"
+                app:errorEnabled="true"
+                app:startIconDrawable="@drawable/outline_message_24">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableEnd="@drawable/outline_help_outline_24"
+                    android:drawableTint="?attr/colorAccent"
+                    android:maxLength="70"
+                    android:maxLines="5" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        android:id="@+id/cancelButton2"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
+        android:onClick="cancelTapped"
+        android:text="Previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/nextButton2" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/add_bank_desc"
-            android:text="@string/add_bank"
-            android:textSize="@dimen/large_heading"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/nextButton2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="nextTapped"
+        android:text="Next"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:contentDescription="@string/add_bank_desc"
-            android:text="Message Details"
-            android:layout_marginTop="16dp"
-            android:textSize="@dimen/small_heading" />
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:contentDescription="@string/add_bank_desc"
-            android:text="@string/message_details"
-            android:textSize="@dimen/medium_body" />
-
-        <ImageView
-            android:id="@+id/message_art_svg"
-            android:visibility="visible"
-            android:layout_width="200dp"
-            android:layout_height="112dp"
-            android:layout_marginVertical="32dp"
-            android:src="@drawable/message" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginVertical="16dp"
-            android:hint="Senders Name"
-            app:counterEnabled="true"
-            app:counterMaxLength="20"
-            app:errorEnabled="true"
-            app:startIconDrawable="@drawable/outline_person_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/senderNameEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/outline_help_outline_24"
-                android:drawableTint="?attr/colorAccent"
-                android:maxLength="20"
-                android:singleLine="true" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Sample Credit Message"
-            app:counterEnabled="true"
-            app:counterMaxLength="70"
-            app:errorEnabled="true"
-            app:startIconDrawable="@drawable/outline_sms_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/outline_help_outline_24"
-                android:drawableTint="?attr/colorAccent"
-                android:maxLength="70"
-                android:maxLines="5" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginVertical="16dp"
-            android:hint="Sample Debit Message"
-            app:counterEnabled="true"
-            app:counterMaxLength="70"
-            app:errorEnabled="true"
-            app:startIconDrawable="@drawable/outline_message_24">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:drawableEnd="@drawable/outline_help_outline_24"
-                android:drawableTint="?attr/colorAccent"
-                android:maxLength="70"
-                android:maxLines="5" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-    </LinearLayout>
-
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

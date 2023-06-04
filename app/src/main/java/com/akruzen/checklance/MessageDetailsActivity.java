@@ -5,7 +5,9 @@ import static com.akruzen.checklance.Constants.Methods.showMaterialDialog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +25,15 @@ public class MessageDetailsActivity extends AppCompatActivity {
         senderEditText = findViewById(R.id.senderNameEditText);
         setOnClickListeners(this);
 
+    }
+
+    public void nextTapped (View view) {
+        Intent intent = new Intent(this, DebitMessageActivity.class);
+        startActivity(intent);
+    }
+
+    public void cancelTapped (View view) {
+        finish();
     }
 
     @SuppressLint("ClickableViewAccessibility")
