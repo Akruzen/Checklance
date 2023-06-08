@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-public class DebitMessageActivity extends AppCompatActivity {
+public class BalanceDetailsActivity extends AppCompatActivity {
 
     public void nextTapped (View view) {
         /*Intent intent = new Intent(this, CreditMessageActivity.class);
@@ -19,6 +19,6 @@ public class DebitMessageActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_credit_message);
+        setContentView(R.layout.activity_balance_details);
     }
 }

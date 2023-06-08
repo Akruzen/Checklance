@@ -28,18 +28,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/add_bank_desc"
-                android:text="@string/add_bank"
+                android:text="Bank Details"
                 android:textSize="@dimen/large_heading"
                 android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:contentDescription="@string/add_bank_desc"
-                android:text="Bank Details"
-                android:textSize="@dimen/small_heading" />
 
             <TextView
                 android:id="@+id/textView3"

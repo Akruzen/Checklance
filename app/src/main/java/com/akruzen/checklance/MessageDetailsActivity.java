@@ -28,7 +28,7 @@ public class MessageDetailsActivity extends AppCompatActivity {
     }
 
     public void nextTapped (View view) {
-        Intent intent = new Intent(this, DebitMessageActivity.class);
+        Intent intent = new Intent(this, BalanceDetailsActivity.class);
         startActivity(intent);
     }
 

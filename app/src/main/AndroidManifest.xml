@@ -26,7 +26,7 @@
             android:name=".MessageDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".DebitMessageActivity"
+            android:name=".BalanceDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
