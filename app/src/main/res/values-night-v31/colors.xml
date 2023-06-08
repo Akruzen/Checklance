@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="dynamic_artwork">@color/material_dynamic_primary50</color>
     <color name="dynamic_accent">@color/material_dynamic_neutral20</color>
     <color name="foregroundColor">@color/white</color>
-
+    <color name="nav_art_shirt">@color/material_dynamic_primary50</color>
+    <color name="nav_art_underarms">@color/material_dynamic_neutral_variant20</color>
+    <color name="nav_art_rectangle_edge">@color/material_dynamic_tertiary20</color>
 </resources>

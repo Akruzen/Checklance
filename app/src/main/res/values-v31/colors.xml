@@ -4,6 +4,9 @@
     <color name="dynamic_artwork">@color/material_dynamic_primary50</color>
     <color name="dynamic_accent">@color/material_dynamic_neutral_variant95</color>
     <color name="foregroundColor">@color/black</color>
+    <color name="nav_art_shirt">@color/material_dynamic_primary50</color>
+    <color name="nav_art_underarms">@color/material_dynamic_neutral95</color>
+    <color name="nav_art_rectangle_edge">@color/material_dynamic_tertiary20</color>
 
     <color name="icon_background">@color/material_dynamic_primary90</color>
     <color name="icon_foreground">@color/material_dynamic_primary10</color>

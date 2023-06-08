@@ -1,0 +1,113 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="500dp"
+    android:height="215dp"
+    android:viewportWidth="500"
+    android:viewportHeight="210">
+  <!--Shirt-->
+  <path
+      android:pathData="M94,173C94,123.85 133.85,84 183,84H318C367.15,84 407,123.85 407,173V173H94V173Z"
+      android:fillColor="@color/nav_art_shirt"/>
+  <!--Underarms Start-->
+  <path
+      android:pathData="M153,142L158.2,196.75H147.8L153,142Z"
+      android:fillColor="@color/nav_art_underarms"/>
+  <path
+      android:pathData="M347,142L352.2,196.75H341.8L347,142Z"
+      android:fillColor="@color/nav_art_underarms"/>
+  <!--Underarms End-->
+  <!--Palms Start-->
+  <path
+      android:pathData="M372,173C372,163.61 379.61,156 389,156H454C459.52,156 464,160.48 464,166V173H372V173Z"
+      android:fillColor="#EBA98C"/>
+  <path
+      android:pathData="M129,173C129,163.61 121.39,156 112,156H47C41.48,156 37,160.48 37,166V173H129V173Z"
+      android:fillColor="#EBA98C"/>
+  <!--Palms End-->
+  <!--Below Rectangle-->
+  <path
+      android:pathData="M0,173h500v5h-500z"
+      android:fillColor="@color/nav_art_underarms"/>
+  <path
+      android:pathData="M0,178h500v36h-500z"
+      android:fillColor="@color/nav_art_underarms"/>
+  <!--Fingers Start-->
+  <path
+      android:pathData="M455,157C455,153.13 458.13,150 462,150H463C466.87,150 470,153.13 470,157V192.5C470,196.64 466.64,200 462.5,200V200C458.36,200 455,196.64 455,192.5V157Z"
+      android:fillColor="#E8BEAC"/>
+  <path
+      android:pathData="M434,157C434,153.13 437.13,150 441,150H442C445.87,150 449,153.13 449,157V197.5C449,201.64 445.64,205 441.5,205V205C437.36,205 434,201.64 434,197.5V157Z"
+      android:fillColor="#E8BEAC"/>
+  <path
+      android:pathData="M413,157C413,153.13 416.13,150 420,150H421C424.87,150 428,153.13 428,157V200.5C428,204.64 424.64,208 420.5,208V208C416.36,208 413,204.64 413,200.5V157Z"
+      android:fillColor="#E8BEAC"/>
+  <path
+      android:pathData="M392,157C392,153.13 395.13,150 399,150H400C403.87,150 407,153.13 407,157V196.5C407,200.64 403.64,204 399.5,204V204C395.36,204 392,200.64 392,196.5V157Z"
+      android:fillColor="#E8BEAC"/>
+  <path
+      android:pathData="M371,162C371,159.79 372.79,158 375,158H382C384.21,158 386,159.79 386,162V167.5C386,171.64 382.64,175 378.5,175V175C374.36,175 371,171.64 371,167.5V162Z"
+      android:fillColor="#E8BEAC"/>
+  <path
+      android:pathData="M46,157C46,153.13 42.87,150 39,150H38C34.13,150 31,153.13 31,157V192.5C31,196.64 34.36,200 38.5,200V200C42.64,200 46,196.64 46,192.5V157Z"
+      android:fillColor="#E8BEAC"/>
+  <path
+      android:pathData="M67,157C67,153.13 63.87,150 60,150H59C55.13,150 52,153.13 52,157V197.5C52,201.64 55.36,205 59.5,205V205C63.64,205 67,201.64 67,197.5V157Z"
+      android:fillColor="#E8BEAC"/>
+  <path
+      android:pathData="M88,157C88,153.13 84.87,150 81,150H80C76.13,150 73,153.13 73,157V200.5C73,204.64 76.36,208 80.5,208V208C84.64,208 88,204.64 88,200.5V157Z"
+      android:fillColor="#E8BEAC"/>
+  <path
+      android:pathData="M109,157C109,153.13 105.87,150 102,150H101C97.13,150 94,153.13 94,157V196.5C94,200.64 97.36,204 101.5,204V204C105.64,204 109,200.64 109,196.5V157Z"
+      android:fillColor="#E8BEAC"/>
+  <path
+      android:pathData="M130,162C130,159.79 128.21,158 126,158H119C116.79,158 115,159.79 115,162V167.5C115,171.64 118.36,175 122.5,175V175C126.64,175 130,171.64 130,167.5V162Z"
+      android:fillColor="#E8BEAC"/>
+  <!--Fingers End-->
+  <!--Face-->
+  <path
+      android:pathData="M250,75m-75,0a75,75 0,1 1,150 0a75,75 0,1 1,-150 0"
+      android:fillColor="#E8BEAC"/>
+  <!--Hair-->
+  <path
+      android:pathData="M175,50C175,22.39 197.39,0 225,0H275C302.61,0 325,22.39 325,50V84H175V50Z"
+      android:fillColor="#37474F"/>
+  <!--His Right Eyebrow-->
+  <path
+      android:pathData="M223.92,110.92m-12.92,0a12.92,12.92 0,1 1,25.83 0a12.92,12.92 0,1 1,-25.83 0"
+      android:fillColor="#37474F"/>
+  <!--His Right Eyebrow Subtract-->
+  <path
+      android:pathData="M223.92,116.08m-12.92,0a12.92,12.92 0,1 1,25.83 0a12.92,12.92 0,1 1,-25.83 0"
+      android:fillColor="#E8BEAC"/>
+  <!--His Left Eyebrow-->
+  <path
+      android:pathData="M275.92,110.92m-12.92,0a12.92,12.92 0,1 1,25.83 0a12.92,12.92 0,1 1,-25.83 0"
+      android:fillColor="#37474F"/>
+  <!--His Left Eyebrow Subtract-->
+  <path
+      android:pathData="M275.92,116.08m-12.92,0a12.92,12.92 0,1 1,25.83 0a12.92,12.92 0,1 1,-25.83 0"
+      android:fillColor="#E8BEAC"/>
+  <!--His Right Eye-->
+  <path
+      android:pathData="M219,120a5,4 0,1 0,10 0a5,4 0,1 0,-10 0z"
+      android:fillColor="#ffffff"/>
+  <!--His Left Eye-->
+  <path
+      android:pathData="M271,120a5,4 0,1 0,10 0a5,4 0,1 0,-10 0z"
+      android:fillColor="#ffffff"/>
+  <!--Nose-->
+  <path
+      android:pathData="M252.62,158.28C251.48,160.34 248.52,160.34 247.38,158.28L241.22,147.21C240.11,145.21 241.55,142.75 243.84,142.75H256.16C258.45,142.75 259.89,145.21 258.78,147.21L252.62,158.28Z"
+      android:fillColor="#E8BEAC"/>
+  <!--Hairline-->
+  <path
+      android:pathData="M214,62L222.66,86H205.34L214,62Z"
+      android:fillColor="#E8BEAC"/>
+  <!--His Right Pupil-->
+  <path
+      android:pathData="M224,122m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"
+      android:fillColor="#37474F"/>
+  <!--His Left Pupil-->
+  <path
+      android:pathData="M276,122m-2,0a2,2 0,1 1,4 0a2,2 0,1 1,-4 0"
+      android:fillColor="#37474F"/>
+</vector>
