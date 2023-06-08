@@ -3,10 +3,10 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-
     <!--Accent Colours-->
     <color name="dynamic_artwork">#009688</color>
     <color name="dynamic_accent">#e0f2f1</color>
+    <color name="foregroundColor">@color/black</color>
 
     <color name="icon_background">@color/black</color>
     <color name="icon_foreground">#F5ECB9</color>

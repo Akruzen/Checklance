@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <color name="dynamic_artwork">@color/material_dynamic_primary50</color>
     <color name="dynamic_accent">@color/material_dynamic_neutral20</color>
+    <color name="foregroundColor">@color/white</color>
 
-    <color name="icon_background">@color/material_dynamic_primary90</color>
-    <color name="icon_foreground">@color/material_dynamic_primary10</color>
-    <color name="icon_foreground_variant">@color/material_dynamic_primary50</color>
-    <color name="icon_foreground_accent">@color/material_dynamic_primary90</color>
 </resources>

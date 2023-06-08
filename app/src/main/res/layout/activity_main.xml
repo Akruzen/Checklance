@@ -80,9 +80,8 @@
                 android:text="It's quite deserted here\nAdd a bank to get started"
                 android:textSize="@dimen/large_body" />
 
-            <Button
+            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/button"
-                style="@style/Widget.Material3.Button.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginVertical="32dp"
