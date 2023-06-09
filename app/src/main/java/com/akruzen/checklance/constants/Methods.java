@@ -1,8 +1,14 @@
 package com.akruzen.checklance.constants;
 
+import static com.akruzen.checklance.constants.Variables.getThemeKey;
+import static com.akruzen.checklance.constants.Variables.theme;
+
 import android.content.Context;
 import android.view.MotionEvent;
 
+import androidx.appcompat.app.AppCompatDelegate;
+
+import com.akruzen.checklance.lib.TinyDB;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -23,6 +29,22 @@ public class Methods {
             return event.getRawX() >= (editText.getRight() - editText.getCompoundDrawables()[2/*DRAWABLE_RIGHT*/].getBounds().width());
         }
         return false;
+    }
+
+    public static void applyCustomTheme(TinyDB tinyDB) {
+        switch (theme) {
+            case 0:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                break;
+            default:
+            case 1:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM);
+                break;
+            case 2:
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                break;
+        }
+        tinyDB.putInt(getThemeKey(), theme);
     }
 
 }

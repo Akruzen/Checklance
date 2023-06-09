@@ -6,6 +6,9 @@ import java.util.List;
 
 public class Variables {
 
+    // TinyDB Keys
+    private static final String themeKey = "themeKey"; // 0: Light, 1: System, 2: Dark
+    public static int theme = 1; // 0: Light, 1: System, 2: Dark
     private static final List<String> bankList = Arrays.asList(
             "State Bank of India", "Punjab National Bank", "Bank of Baroda", "ICICI Bank", "HDFC Bank",
             "Axis Bank", "Bank of India", "Union Bank of India", "Canara Bank", "Kotak Mahindra Bank",
@@ -17,5 +20,9 @@ public class Variables {
     public static List<String> getBankList () {
         Collections.sort(bankList);
         return bankList;
+    }
+
+    public static String getThemeKey() {
+        return themeKey;
     }
 }

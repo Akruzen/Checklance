@@ -1,5 +1,7 @@
 package com.akruzen.checklance;
 
+import static com.akruzen.checklance.constants.Methods.applyCustomTheme;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -13,22 +15,27 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.akruzen.checklance.lib.TinyDB;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
+    TinyDB tinyDB;
     NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        // Object Creation
+        tinyDB = new TinyDB(this);
         // Find View
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
         // Method Calls
         setUpNavigationDrawer();
+        applyCustomTheme(tinyDB);
     }
 
     public void openNavDrawer (View view) {
