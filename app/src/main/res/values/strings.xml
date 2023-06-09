@@ -12,4 +12,7 @@
         transactional messages of a particular bank.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="sys_theme_desc">Adapt to your System Theme</string>
+    <string name="light_theme_desc">Always use Light Mode</string>
+    <string name="dark_theme_desc">Always use Dark Mode</string>
 </resources>
