@@ -5,11 +5,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.akruzen.checklance.Constants.Variables;
+import com.akruzen.checklance.constants.Variables;
 
 public class AddBankActivity extends AppCompatActivity {
 

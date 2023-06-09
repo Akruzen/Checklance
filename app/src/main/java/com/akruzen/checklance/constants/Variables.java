@@ -1,4 +1,4 @@
-package com.akruzen.checklance.Constants;
+package com.akruzen.checklance.constants;
 
 import java.util.Arrays;
 import java.util.Collections;

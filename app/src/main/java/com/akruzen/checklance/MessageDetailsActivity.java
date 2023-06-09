@@ -1,7 +1,7 @@
 package com.akruzen.checklance;
 
-import static com.akruzen.checklance.Constants.Methods.isEndIconTapped;
-import static com.akruzen.checklance.Constants.Methods.showMaterialDialog;
+import static com.akruzen.checklance.constants.Methods.isEndIconTapped;
+import static com.akruzen.checklance.constants.Methods.showMaterialDialog;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
