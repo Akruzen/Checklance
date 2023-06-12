@@ -7,8 +7,9 @@
     <color name="dynamic_artwork">#009688</color>
     <color name="dynamic_accent">#e0f2f1</color>
     <color name="foregroundColor">@color/black</color>
+    <color name="backgroundColor">@color/white</color>
     <color name="nav_art_shirt">#A8ABFF</color>
-    <color name="nav_art_underarms">?attr/backgroundColor</color>
+    <color name="nav_art_underarms">@color/backgroundColor</color>
     <color name="nav_art_rectangle_edge">@color/foregroundColor</color>
 
     <color name="icon_background">@color/black</color>

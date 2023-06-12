@@ -4,12 +4,15 @@ import static com.akruzen.checklance.constants.Variables.getThemeKey;
 import static com.akruzen.checklance.constants.Variables.theme;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.view.MotionEvent;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.akruzen.checklance.lib.TinyDB;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 public class Methods {
@@ -45,6 +48,17 @@ public class Methods {
                 break;
         }
         tinyDB.putInt(getThemeKey(), theme);
+    }
+
+    public static void doInitSetup (Context context) {
+        TinyDB tinyDB = new TinyDB(context);
+        theme = tinyDB.getInt(getThemeKey());
+    }
+
+    public static void showSnackBar (View view, String content) {
+        final Snackbar snackbar = Snackbar.make(view, content, Snackbar.LENGTH_LONG);
+        snackbar.setAction("Got It", v -> snackbar.dismiss());
+        snackbar.show();
     }
 
 }

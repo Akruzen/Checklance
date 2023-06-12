@@ -8,4 +8,5 @@
     <color name="dynamic_artwork">#009688</color>
     <color name="dynamic_accent">#004d3f</color>
     <color name="foregroundColor">@color/white</color>
+    <color name="backgroundColor">@color/black</color>
 </resources>

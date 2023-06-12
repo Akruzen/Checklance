@@ -1,5 +1,6 @@
 package com.akruzen.checklance.constants;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -8,6 +9,7 @@ public class Variables {
 
     // TinyDB Keys
     private static final String themeKey = "themeKey"; // 0: Light, 1: System, 2: Dark
+    private static final String showSnackBarKey = "showSnackBarKey"; // Useful to show theme change
     public static int theme = 1; // 0: Light, 1: System, 2: Dark
     private static final List<String> bankList = Arrays.asList(
             "State Bank of India", "Punjab National Bank", "Bank of Baroda", "ICICI Bank", "HDFC Bank",
@@ -19,10 +21,13 @@ public class Variables {
 
     public static List<String> getBankList () {
         Collections.sort(bankList);
-        return bankList;
+        List<String> list = new ArrayList<>(bankList);
+        list.add("Other...");
+        return list;
     }
 
     public static String getThemeKey() {
         return themeKey;
     }
+    public static String getShowSnackBarKey() { return showSnackBarKey; }
 }

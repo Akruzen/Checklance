@@ -1,6 +1,7 @@
 package com.akruzen.checklance;
 
 import static com.akruzen.checklance.constants.Methods.applyCustomTheme;
+import static com.akruzen.checklance.constants.Methods.doInitSetup;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         // Method Calls
         setUpNavigationDrawer();
+        doInitSetup(this);
         applyCustomTheme(tinyDB);
     }
 
