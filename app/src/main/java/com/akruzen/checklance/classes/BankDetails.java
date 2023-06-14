@@ -17,4 +17,11 @@ public class BankDetails {
         this.debKeys = debKeys; this.currBal = currBal;*/
     }
 
+    public int getAccNo() {
+        return accNo;
+    }
+
+    public String getBank() {
+        return bank;
+    }
 }
