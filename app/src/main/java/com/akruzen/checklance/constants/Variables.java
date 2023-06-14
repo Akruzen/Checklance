@@ -9,7 +9,7 @@ public class Variables {
 
     // TinyDB Keys
     private static final String themeKey = "themeKey"; // 0: Light, 1: System, 2: Dark
-    private static final String showSnackBarKey = "showSnackBarKey"; // Useful to show theme change
+    private static final String launchedBefore = "launchedBefore"; // Has the app been launched first time?
     private static final String jsonFileName = "/Checklance/output.json";
     public static int theme = 1; // 0: Light, 1: System, 2: Dark
     private static final List<String> bankList = Arrays.asList(
@@ -30,9 +30,12 @@ public class Variables {
     public static String getThemeKey() {
         return themeKey;
     }
-    public static String getShowSnackBarKey() { return showSnackBarKey; }
 
     public static String getJsonFileName() {
         return jsonFileName;
+    }
+
+    public static String getLaunchedBefore() {
+        return launchedBefore;
     }
 }

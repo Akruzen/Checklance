@@ -1,13 +1,10 @@
 package com.akruzen.checklance;
 
 import static com.akruzen.checklance.constants.Methods.applyCustomTheme;
-import static com.akruzen.checklance.constants.Methods.showSnackBar;
-import static com.akruzen.checklance.constants.Variables.getShowSnackBarKey;
 import static com.akruzen.checklance.constants.Variables.getThemeKey;
 import static com.akruzen.checklance.constants.Variables.theme;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -51,7 +48,6 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void applyThemeTapped (View view) {
-        tinyDB.putBoolean(getShowSnackBarKey(), true);
         applyCustomTheme(tinyDB);
         setApplyButtonState();
         String themeStr = theme == 1 ? "System" : theme == 0 ? "Light" : "Dark";

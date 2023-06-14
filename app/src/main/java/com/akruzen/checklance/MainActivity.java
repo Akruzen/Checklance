@@ -5,32 +5,40 @@ import static com.akruzen.checklance.constants.Methods.applyCustomTheme;
 import static com.akruzen.checklance.constants.Methods.doInitSetup;
 import static com.akruzen.checklance.constants.Methods.jsonFileExists;
 import static com.akruzen.checklance.constants.Methods.readJSONFile;
+import static com.akruzen.checklance.constants.Variables.getLaunchedBefore;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import com.akruzen.checklance.classes.BankDetails;
 import com.akruzen.checklance.lib.TinyDB;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
-    LinearLayout mainLinearLayout;
+    LinearLayout desertLinearLayout, showCardLinearLayout, scrollLinearLayout;
+    ExtendedFloatingActionButton cornerFAB;
     TinyDB tinyDB;
     NavigationView navigationView;
+    boolean cardSetupComplete = false;
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!cardSetupComplete) setUpCardViews();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,13 +49,14 @@ public class MainActivity extends AppCompatActivity {
         // Find View
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
-        mainLinearLayout = findViewById(R.id.mainLinearLayout);
+        desertLinearLayout = findViewById(R.id.mainLinearLayout);
+        showCardLinearLayout = findViewById(R.id.showCardLinearLayout);
+        scrollLinearLayout = findViewById(R.id.scrollLinearLayout);
+        cornerFAB = findViewById(R.id.cornerFAB);
         // Method Calls
         setUpNavigationDrawer();
         doInitSetup(this);
         applyCustomTheme(tinyDB);
-        // Add Bank CardViews
-        setUpCardViews();
     }
 
     public void openNavDrawer (View view) {
@@ -73,11 +82,41 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setUpCardViews() {
-        if (jsonFileExists()) {
-            BankDetails details = readJSONFile(this);
-            Toast.makeText(this, "Acc: " + details.getAccNo() + "\nName: " + details.getBank(), Toast.LENGTH_SHORT).show();
-            addCardViewToLayout(this, details, mainLinearLayout);
+        cardSetupComplete = true;
+        if (tinyDB.getBoolean(getLaunchedBefore())) {
+            if (jsonFileExists()) {
+                BankDetails details = readJSONFile(this);
+                Toast.makeText(this, "Acc: " + details.getAccNo() + "\nName: " + details.getBank(), Toast.LENGTH_SHORT).show();
+                addCardViewToLayout(this, details, showCardLinearLayout);
+
+                /* Add code here */
+
+                setVisibilities(true);
+            } else {
+                setVisibilities(false);
+            }
+        } else {
+            tinyDB.putBoolean(getLaunchedBefore(), true);
         }
+    }
+
+    private void setVisibilities(boolean cardsExist) {
+        ScrollView.LayoutParams layoutParams = new ScrollView.LayoutParams(
+                ScrollView.LayoutParams.MATCH_PARENT,
+                ScrollView.LayoutParams.WRAP_CONTENT
+        );
+        if (cardsExist) {
+            desertLinearLayout.setVisibility(View.GONE);
+            showCardLinearLayout.setVisibility(View.VISIBLE);
+            cornerFAB.setVisibility(View.VISIBLE);
+            layoutParams.gravity = Gravity.TOP;
+        } else {
+            desertLinearLayout.setVisibility(View.VISIBLE);
+            showCardLinearLayout.setVisibility(View.GONE);
+            cornerFAB.setVisibility(View.GONE);
+            layoutParams.gravity = Gravity.CENTER;
+        }
+        scrollLinearLayout.setLayoutParams(layoutParams);
     }
 
 }
