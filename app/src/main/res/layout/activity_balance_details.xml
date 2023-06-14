@@ -88,7 +88,7 @@
         android:id="@+id/nextButton3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:onClick="nextTapped"
+        android:onClick="finishTapped"
         android:text="Finish"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
