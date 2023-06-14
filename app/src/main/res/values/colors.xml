@@ -11,6 +11,7 @@
     <color name="nav_art_shirt">#A8ABFF</color>
     <color name="nav_art_underarms">@color/backgroundColor</color>
     <color name="nav_art_rectangle_edge">@color/foregroundColor</color>
+    <color name="delete_red">#ffc8b9</color>
 
     <color name="icon_background">@color/black</color>
     <color name="icon_foreground">#F5ECB9</color>
