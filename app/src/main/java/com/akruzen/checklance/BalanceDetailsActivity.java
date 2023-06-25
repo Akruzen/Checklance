@@ -17,7 +17,7 @@ public class BalanceDetailsActivity extends AppCompatActivity {
         BankDetails details = new BankDetails(
                 4451, "Maharashtra Bank"
         );
-        saveAsJSONFile(details);
+        saveAsJSONFile(details, this);
         Toast.makeText(this, "Created Successfully", Toast.LENGTH_SHORT).show();
         Intent intent = new Intent(this, MainActivity.class);
         // Clears the back stack and brings any current running instance to top

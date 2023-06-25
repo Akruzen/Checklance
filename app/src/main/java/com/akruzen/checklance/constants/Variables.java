@@ -10,7 +10,7 @@ public class Variables {
     // TinyDB Keys
     private static final String themeKey = "themeKey"; // 0: Light, 1: System, 2: Dark
     private static final String launchedBefore = "launchedBefore"; // Has the app been launched first time?
-    private static final String jsonFileName = "/Checklance/output.json";
+    private static final String jsonFileName = "output.json";
     // public static int theme = 1; // 0: Light, 1: System, 2: Dark
     private static final List<String> bankList = Arrays.asList(
             "State Bank of India", "Punjab National Bank", "Bank of Baroda", "ICICI Bank", "HDFC Bank",

@@ -4,7 +4,9 @@ import static com.akruzen.checklance.constants.Variables.getJsonFileName;
 import static com.akruzen.checklance.constants.Variables.getThemeKey;
 
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.Environment;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -84,9 +86,12 @@ public class Methods {
     }
 
     // Writes BankDetails object as JSON file
-    public static void saveAsJSONFile(BankDetails details) {
+    public static void saveAsJSONFile(BankDetails details, Context context) {
         Gson gson = new Gson();
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getJsonFileName());
+        ContextWrapper cw = new ContextWrapper(context);
+        File directory = cw.getDir("configDir", Context.MODE_PRIVATE);
+        File file = new File(directory, getJsonFileName());
+        // File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getJsonFileName());
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -106,15 +111,21 @@ public class Methods {
     }
 
     // Checks if JSON file exists
-    public static boolean jsonFileExists () {
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getJsonFileName());
+    public static boolean jsonFileExists (Context context) {
+        ContextWrapper cw = new ContextWrapper(context);
+        File directory = cw.getDir("configDir", Context.MODE_PRIVATE);
+        File file = new File(directory, getJsonFileName());
+        // File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getJsonFileName());
         return file.exists();
     }
 
     // Read the JSON file and return the original object
     public static BankDetails readJSONFile (Context context) {
         try {
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getJsonFileName());
+            ContextWrapper cw = new ContextWrapper(context);
+            File directory = cw.getDir("configDir", Context.MODE_PRIVATE);
+            File file = new File(directory, getJsonFileName());
+            // File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getJsonFileName());
             FileReader fileReader = new FileReader(file);
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = jsonParser.parse(fileReader).getAsJsonObject();

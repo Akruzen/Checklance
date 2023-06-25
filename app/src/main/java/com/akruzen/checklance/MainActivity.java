@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        // if (!cardSetupComplete) setUpCardViews();
+        if (!cardSetupComplete) setUpCardViews();
     }
 
     @Override
@@ -85,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpCardViews() {
         cardSetupComplete = true;
         if (tinyDB.getBoolean(getLaunchedBefore())) {
-            if (jsonFileExists()) {
+            if (jsonFileExists(this)) {
                 BankDetails details = readJSONFile(this);
                 Toast.makeText(this, "Acc: " + details.getAccNo() + "\nName: " + details.getBank(), Toast.LENGTH_SHORT).show();
                 addCardViewToLayout(this, details, showCardLinearLayout);
