@@ -6,6 +6,7 @@ import static com.akruzen.checklance.constants.Methods.doInitSetup;
 import static com.akruzen.checklance.constants.Methods.jsonFileExists;
 import static com.akruzen.checklance.constants.Methods.readJSONFile;
 import static com.akruzen.checklance.constants.Variables.getLaunchedBefore;
+import static com.akruzen.checklance.constants.Variables.getThemeKey;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (!cardSetupComplete) setUpCardViews();
+        // if (!cardSetupComplete) setUpCardViews();
     }
 
     @Override

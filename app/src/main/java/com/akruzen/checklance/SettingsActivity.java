@@ -2,9 +2,9 @@ package com.akruzen.checklance;
 
 import static com.akruzen.checklance.constants.Methods.applyCustomTheme;
 import static com.akruzen.checklance.constants.Variables.getThemeKey;
-import static com.akruzen.checklance.constants.Variables.theme;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -20,7 +20,7 @@ public class SettingsActivity extends AppCompatActivity {
     MaterialButtonToggleGroup themeToggleBtn;
     TextView themeDescTxtView;
     TinyDB tinyDB;
-
+    int theme = 0;
     Button applyButton;
 
     @Override
@@ -33,9 +33,11 @@ public class SettingsActivity extends AppCompatActivity {
         themeToggleBtn = findViewById(R.id.themeToggleButton);
         themeDescTxtView = findViewById(R.id.themeDescTxt);
         applyButton = findViewById(R.id.setThemeBtn);
+        // Set variable values
+        theme = tinyDB.getInt(getThemeKey());
         // Method Calls
-        setThemeToggleBtn();
-        setThemeTextView();
+        setToggleBtnState();
+        setToggleBtnOnClick();
     }
 
     private void setApplyButtonState() {
@@ -48,13 +50,14 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     public void applyThemeTapped (View view) {
+        tinyDB.putInt(getThemeKey(), theme);
         applyCustomTheme(tinyDB);
         setApplyButtonState();
         String themeStr = theme == 1 ? "System" : theme == 0 ? "Light" : "Dark";
         Toast.makeText(this, themeStr + " Theme Applied", Toast.LENGTH_SHORT).show();
     }
 
-    private void setThemeToggleBtn () {
+    private void setToggleBtnState() {
         switch (tinyDB.getInt(getThemeKey())) {
             case 0:
                 themeToggleBtn.check(R.id.segBtnLight); break;
@@ -64,25 +67,33 @@ public class SettingsActivity extends AppCompatActivity {
             case 2:
                 themeToggleBtn.check(R.id.segBtnDark); break;
         }
+        setThemeTextView();
+    }
+
+    private void setToggleBtnOnClick() {
         themeToggleBtn.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (checkedId == R.id.segBtnSys) {
-                theme = 1;
+            // IMPORTANT: This method is also called when a button unchecks itself
+            if (isChecked) {
+                if (checkedId == R.id.segBtnLight) {
+                    theme = 0;
+                }
+                else if (checkedId == R.id.segBtnSys) {
+                    theme = 1;
+                }
+                else if (checkedId == R.id.segBtnDark) {
+                    theme = 2;
+                }
+                setThemeTextView();
+                setApplyButtonState();
             }
-            if (checkedId == R.id.segBtnLight) {
-                theme = 0;
-            }
-            if (checkedId == R.id.segBtnDark) {
-                theme = 2;
-            }
-            setThemeTextView();
-            setApplyButtonState();
         });
     }
 
     private void setThemeTextView () {
+        Log.i("Theme", "Selected Theme: " + theme);
         switch (theme) {
             case 0: themeDescTxtView.setText(getString(R.string.light_theme_desc)); break;
-            default: case 1: themeDescTxtView.setText(getString(R.string.sys_theme_desc)); break;
+            case 1: themeDescTxtView.setText(getString(R.string.sys_theme_desc)); break;
             case 2: themeDescTxtView.setText(getString(R.string.dark_theme_desc)); break;
         }
     }

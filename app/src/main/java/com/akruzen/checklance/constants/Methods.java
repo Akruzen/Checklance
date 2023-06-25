@@ -2,7 +2,6 @@ package com.akruzen.checklance.constants;
 
 import static com.akruzen.checklance.constants.Variables.getJsonFileName;
 import static com.akruzen.checklance.constants.Variables.getThemeKey;
-import static com.akruzen.checklance.constants.Variables.theme;
 
 import android.content.Context;
 import android.os.Environment;
@@ -55,6 +54,7 @@ public class Methods {
 
     // Apply Dark, Light or System Theme
     public static void applyCustomTheme(TinyDB tinyDB) {
+        int theme = tinyDB.getInt(getThemeKey());
         switch (theme) {
             case 0:
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
@@ -73,7 +73,7 @@ public class Methods {
     // Do this everytime app starts
     public static void doInitSetup (Context context) {
         TinyDB tinyDB = new TinyDB(context);
-        theme = tinyDB.getInt(getThemeKey());
+        // theme = tinyDB.getInt(getThemeKey());
     }
 
     // Show custom SnackBar
