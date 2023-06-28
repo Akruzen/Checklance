@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
         if (tinyDB.getBoolean(getLaunchedBefore())) {
             if (jsonFileExists(this)) {
                 BankDetails details = readJSONFile(this);
-                Toast.makeText(this, "Acc: " + details.getAccNo() + "\nName: " + details.getBank(), Toast.LENGTH_SHORT).show();
                 addCardViewToLayout(this, details, showCardLinearLayout);
 
                 /* Add code here */

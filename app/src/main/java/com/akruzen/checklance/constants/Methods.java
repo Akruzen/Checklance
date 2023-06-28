@@ -133,8 +133,12 @@ public class Methods {
             // Extract values from the JSON
             int accNo = jsonObject.get("accNo").getAsInt();
             String bank = jsonObject.get("bank").getAsString();
+            String sender = jsonObject.get("sender").getAsString();
+            String credKeys = jsonObject.get("credKeys").getAsString();
+            String debKeys = jsonObject.get("debKeys").getAsString();
+            double currBal = jsonObject.get("currBal").getAsDouble();
             // Set them to BankDetails Object
-            BankDetails details = new BankDetails(accNo, bank);
+            BankDetails details = new BankDetails(accNo, bank, sender, credKeys, debKeys, currBal);
             fileReader.close();
             return details;
         } catch (IOException e) {
@@ -154,8 +158,9 @@ public class Methods {
         TextView balanceTextView = cardView.findViewById(R.id.balanceTextView);
 
         // Set the content for the TextViews
-        bankNameTextView.setText(details.getBank());
-        balanceTextView.setText(String.valueOf(details.getAccNo()));
+        String bankName = details.getBank() + " (" + details.getAccNo() + ")";
+        bankNameTextView.setText(bankName);
+        balanceTextView.setText(String.valueOf(details.getCurrBal()));
 
         // Add the card view to your LinearLayout
         layout.addView(cardView);

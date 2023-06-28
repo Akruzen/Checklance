@@ -12,6 +12,7 @@ public class Variables {
     private static final String launchedBefore = "launchedBefore"; // Has the app been launched first time?
     private static final String jsonFileName = "output.json";
     // public static int theme = 1; // 0: Light, 1: System, 2: Dark
+    private static final String otherBankStr = "Other...";
     private static final List<String> bankList = Arrays.asList(
             "State Bank of India", "Punjab National Bank", "Bank of Baroda", "ICICI Bank", "HDFC Bank",
             "Axis Bank", "Bank of India", "Union Bank of India", "Canara Bank", "Kotak Mahindra Bank",
@@ -23,7 +24,7 @@ public class Variables {
     public static List<String> getBankList () {
         Collections.sort(bankList);
         List<String> list = new ArrayList<>(bankList);
-        list.add("Other...");
+        list.add(getOtherBankStr());
         return list;
     }
 
@@ -37,5 +38,9 @@ public class Variables {
 
     public static String getLaunchedBefore() {
         return launchedBefore;
+    }
+
+    public static String getOtherBankStr() {
+        return otherBankStr;
     }
 }
