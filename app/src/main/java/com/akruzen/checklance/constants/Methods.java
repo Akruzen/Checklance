@@ -5,8 +5,8 @@ import static com.akruzen.checklance.constants.Variables.getThemeKey;
 
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.os.Environment;
-import android.view.ContextThemeWrapper;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,18 +15,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 
+import com.akruzen.checklance.MainActivity;
 import com.akruzen.checklance.R;
 import com.akruzen.checklance.classes.BankDetails;
 import com.akruzen.checklance.lib.TinyDB;
+import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 
@@ -119,7 +120,10 @@ public class Methods {
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir("configDir", Context.MODE_PRIVATE);
         File file = new File(directory, getJsonFileName());
-        return file.exists();
+        if (file.exists() && readJSONFile(context).size() > 0) {
+            return true;
+        }
+        return false;
     }
 
     // Read the JSON file and return the original object
@@ -157,14 +161,49 @@ public class Methods {
         // Find the TextViews inside the inflated layout
         TextView bankNameTextView = cardView.findViewById(R.id.bankNameTextView);
         TextView balanceTextView = cardView.findViewById(R.id.balanceTextView);
+        MaterialButton deleteButton = cardView.findViewById(R.id.deleteCardBtn);
+        MaterialButton editButton = cardView.findViewById(R.id.editCardBtn);
 
         // Set the content for the TextViews
         String bankName = details.getBank() + " (" + details.getAccNo() + ")";
         bankNameTextView.setText(bankName);
         balanceTextView.setText(String.valueOf(details.getCurrBal()));
+        deleteButton.setOnClickListener(v -> {
+            showAlertDialogBox(context, details);
+        });
+
 
         // Add the card view to your LinearLayout
         layout.addView(cardView);
+    }
+
+    private static void showAlertDialogBox (Context context, BankDetails bankDetails) {
+        AlertDialog alertDialog = new MaterialAlertDialogBuilder(context).create();
+        alertDialog.setTitle("Delete Account");
+        alertDialog.setMessage("Delete selected account? Remember this action is permanent and cannot be undone!");
+        alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Delete",
+                (dialog, which) -> {
+                    if (jsonFileExists(context)) {
+                        List<BankDetails> bankDetailsList = readJSONFile(context);
+                        boolean flag = false;
+                        for (BankDetails detail : bankDetailsList) {
+                            if (detail.getAccNo() == (bankDetails.getAccNo()) &&
+                                    detail.getBank().equals(bankDetails.getBank())) {
+                                flag = true;
+                                bankDetailsList.remove(detail);
+                                saveAsJSONFile(bankDetailsList, context);
+                                Toast.makeText(context, "Bank Account removed", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        if (flag) {
+                            Intent intent = new Intent(context, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(intent);
+                        }
+                    }
+                });
+        alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", (dialog, which) -> dialog.dismiss());
+        alertDialog.show();
     }
 
 }
