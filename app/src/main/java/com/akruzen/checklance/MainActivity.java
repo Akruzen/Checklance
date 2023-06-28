@@ -25,6 +25,8 @@ import com.akruzen.checklance.lib.TinyDB;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
@@ -86,8 +88,11 @@ public class MainActivity extends AppCompatActivity {
         cardSetupComplete = true;
         if (tinyDB.getBoolean(getLaunchedBefore())) {
             if (jsonFileExists(this)) {
-                BankDetails details = readJSONFile(this);
-                addCardViewToLayout(this, details, showCardLinearLayout);
+                List<BankDetails> detailsList = readJSONFile(this);
+                for (BankDetails detail : detailsList) {
+                    addCardViewToLayout(this, detail, showCardLinearLayout);
+                }
+                // addCardViewToLayout(this, detailsList, showCardLinearLayout);
 
                 /* Add code here */
 

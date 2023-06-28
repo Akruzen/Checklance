@@ -1,5 +1,7 @@
 package com.akruzen.checklance;
 
+import static com.akruzen.checklance.constants.Methods.jsonFileExists;
+import static com.akruzen.checklance.constants.Methods.readJSONFile;
 import static com.akruzen.checklance.constants.Methods.saveAsJSONFile;
 import static com.akruzen.checklance.constants.Methods.showSnackBar;
 
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.akruzen.checklance.classes.BankDetails;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -36,7 +39,15 @@ public class BalanceDetailsActivity extends AppCompatActivity {
                     Integer.parseInt(accNo), bank, sender, credit, debit,
                     Double.parseDouble(Objects.requireNonNull(balanceEditText.getText()).toString())
             );
-            saveAsJSONFile(details, this);
+            if (jsonFileExists(this)) {
+                List<BankDetails> bankDetailsList = readJSONFile(this);
+                bankDetailsList.add(details);
+                saveAsJSONFile(bankDetailsList, this);
+            } else {
+                List<BankDetails> bankDetailsList = new ArrayList<>();
+                bankDetailsList.add(details);
+                saveAsJSONFile(bankDetailsList, this);
+            }
             Toast.makeText(this, "Created Successfully", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(this, MainActivity.class);
             // Clears the back stack and brings any current running instance to top

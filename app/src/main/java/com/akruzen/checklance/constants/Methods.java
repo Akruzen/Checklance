@@ -10,6 +10,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,12 +27,15 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonWriter;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
 
 public class Methods {
 
@@ -86,12 +90,11 @@ public class Methods {
     }
 
     // Writes BankDetails object as JSON file
-    public static void saveAsJSONFile(BankDetails details, Context context) {
+    public static void saveAsJSONFile(List<BankDetails> bankDetailsList, Context context) {
         Gson gson = new Gson();
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir("configDir", Context.MODE_PRIVATE);
         File file = new File(directory, getJsonFileName());
-        // File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getJsonFileName());
         if (!file.exists()) {
             try {
                 file.createNewFile();
@@ -102,7 +105,8 @@ public class Methods {
         try {
             FileWriter fileWriter = new FileWriter(file);
             JsonWriter jsonWriter = new JsonWriter(fileWriter);
-            gson.toJson(details, BankDetails.class, jsonWriter);
+            gson.toJson(bankDetailsList, new TypeToken<List<BankDetails>>() {}.getType(), jsonWriter);
+            // gson.toJson(details, BankDetails.class, jsonWriter);
             jsonWriter.close();
             fileWriter.close();
         } catch (IOException e) {
@@ -115,32 +119,21 @@ public class Methods {
         ContextWrapper cw = new ContextWrapper(context);
         File directory = cw.getDir("configDir", Context.MODE_PRIVATE);
         File file = new File(directory, getJsonFileName());
-        // File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getJsonFileName());
         return file.exists();
     }
 
     // Read the JSON file and return the original object
-    public static BankDetails readJSONFile (Context context) {
+    public static List<BankDetails> readJSONFile (Context context) {
         try {
             ContextWrapper cw = new ContextWrapper(context);
             File directory = cw.getDir("configDir", Context.MODE_PRIVATE);
             File file = new File(directory, getJsonFileName());
-            // File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), getJsonFileName());
             FileReader fileReader = new FileReader(file);
-            JsonParser jsonParser = new JsonParser();
-            JsonObject jsonObject = jsonParser.parse(fileReader).getAsJsonObject();
-
-            // Extract values from the JSON
-            int accNo = jsonObject.get("accNo").getAsInt();
-            String bank = jsonObject.get("bank").getAsString();
-            String sender = jsonObject.get("sender").getAsString();
-            String credKeys = jsonObject.get("credKeys").getAsString();
-            String debKeys = jsonObject.get("debKeys").getAsString();
-            double currBal = jsonObject.get("currBal").getAsDouble();
-            // Set them to BankDetails Object
-            BankDetails details = new BankDetails(accNo, bank, sender, credKeys, debKeys, currBal);
+            Gson gson = new Gson();
+            Type bankDetailsListType = new TypeToken<List<BankDetails>>() {}.getType();
+            List<BankDetails> bankDetailsList = gson.fromJson(fileReader, bankDetailsListType);
             fileReader.close();
-            return details;
+            return bankDetailsList;
         } catch (IOException e) {
             Toast.makeText(context, "Cannot read file", Toast.LENGTH_SHORT).show();
             throw new RuntimeException(e);
@@ -152,6 +145,14 @@ public class Methods {
 
         // Inflate the card view layout
         CardView cardView = (CardView) inflater.inflate(R.layout.bank_card_view, null);
+
+        // Set margins for the card view
+        LinearLayout.LayoutParams cardViewParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        cardView.setLayoutParams(cardViewParams);
+        ViewGroup.MarginLayoutParams layoutParams =
+                (ViewGroup.MarginLayoutParams) cardView.getLayoutParams();
+        layoutParams.setMargins(0, 0, 0, 32);
+        cardView.requestLayout();
 
         // Find the TextViews inside the inflated layout
         TextView bankNameTextView = cardView.findViewById(R.id.bankNameTextView);
