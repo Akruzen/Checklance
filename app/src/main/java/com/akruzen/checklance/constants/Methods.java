@@ -7,10 +7,13 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -204,6 +207,38 @@ public class Methods {
                 });
         alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancel", (dialog, which) -> dialog.dismiss());
         alertDialog.show();
+    }
+
+    public static void fadeOutAndReplaceText(final String newText, TextView textView) {
+        Animation fadeOut = new AlphaAnimation(1, 0);
+        fadeOut.setDuration(500);  // milliseconds
+        fadeOut.setFillAfter(true);
+        fadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+                // Do nothing
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                textView.setText(newText);
+                textView.setTypeface(textView.getTypeface(), Typeface.BOLD);
+                fadeIn(textView);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        textView.startAnimation(fadeOut);
+    }
+
+    private static void fadeIn(TextView textView) {
+        Animation fadeIn = new AlphaAnimation(0, 1);
+        fadeIn.setDuration(500);
+        fadeIn.setFillAfter(true);
+        textView.startAnimation(fadeIn);
     }
 
 }

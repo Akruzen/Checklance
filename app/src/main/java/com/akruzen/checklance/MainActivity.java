@@ -3,18 +3,22 @@ package com.akruzen.checklance;
 import static com.akruzen.checklance.constants.Methods.addCardViewToLayout;
 import static com.akruzen.checklance.constants.Methods.applyCustomTheme;
 import static com.akruzen.checklance.constants.Methods.doInitSetup;
+import static com.akruzen.checklance.constants.Methods.fadeOutAndReplaceText;
 import static com.akruzen.checklance.constants.Methods.jsonFileExists;
 import static com.akruzen.checklance.constants.Methods.readJSONFile;
+import static com.akruzen.checklance.constants.Methods.saveAsJSONFile;
 import static com.akruzen.checklance.constants.Variables.getLaunchedBefore;
-import static com.akruzen.checklance.constants.Variables.getThemeKey;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -26,6 +30,8 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     ExtendedFloatingActionButton cornerFAB;
     TinyDB tinyDB;
     NavigationView navigationView;
+    TextView headingTextView;
+    ImageView refreshImageView;
     boolean cardSetupComplete = false;
 
 
@@ -56,10 +64,15 @@ public class MainActivity extends AppCompatActivity {
         showCardLinearLayout = findViewById(R.id.showCardLinearLayout);
         scrollLinearLayout = findViewById(R.id.scrollLinearLayout);
         cornerFAB = findViewById(R.id.cornerFAB);
+        headingTextView = findViewById(R.id.headingTextView);
+        refreshImageView = findViewById(R.id.refreshImageView);
         // Method Calls
         setUpNavigationDrawer();
         doInitSetup(this);
         applyCustomTheme(tinyDB);
+        new Handler().postDelayed(() -> {
+            fadeOutAndReplaceText("Checklance", headingTextView);
+        }, 2000);
     }
 
     public void openNavDrawer (View view) {
@@ -69,6 +82,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void addBankFAB (View view) {
         Intent intent = new Intent(this, AddBankActivity.class);
+        startActivity(intent);
+    }
+
+    public void refreshImageViewTapped (View view) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
     }
 
@@ -92,10 +111,6 @@ public class MainActivity extends AppCompatActivity {
                 for (BankDetails detail : detailsList) {
                     addCardViewToLayout(this, detail, showCardLinearLayout);
                 }
-                // addCardViewToLayout(this, detailsList, showCardLinearLayout);
-
-                /* Add code here */
-
                 setVisibilities(true);
             } else {
                 setVisibilities(false);
@@ -112,11 +127,13 @@ public class MainActivity extends AppCompatActivity {
         );
         if (cardsExist) {
             desertLinearLayout.setVisibility(View.GONE);
+            refreshImageView.setVisibility(View.VISIBLE);
             showCardLinearLayout.setVisibility(View.VISIBLE);
             cornerFAB.setVisibility(View.VISIBLE);
             layoutParams.gravity = Gravity.TOP;
         } else {
             desertLinearLayout.setVisibility(View.VISIBLE);
+            refreshImageView.setVisibility(View.INVISIBLE);
             showCardLinearLayout.setVisibility(View.GONE);
             cornerFAB.setVisibility(View.GONE);
             layoutParams.gravity = Gravity.CENTER;

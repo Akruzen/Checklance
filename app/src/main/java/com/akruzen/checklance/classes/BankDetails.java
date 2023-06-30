@@ -29,6 +29,10 @@ public class BankDetails {
         return currBal;
     }
 
+    public void setCurrBal(double currBal) {
+        this.currBal = currBal;
+    }
+
     public String getCredKeys() {
         return credKeys;
     }
