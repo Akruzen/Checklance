@@ -7,8 +7,11 @@ import static com.akruzen.checklance.constants.Methods.fadeOutAndReplaceText;
 import static com.akruzen.checklance.constants.Methods.jsonFileExists;
 import static com.akruzen.checklance.constants.Methods.readJSONFile;
 import static com.akruzen.checklance.constants.Methods.saveAsJSONFile;
+import static com.akruzen.checklance.constants.Variables.getBiometricKey;
+import static com.akruzen.checklance.constants.Variables.getIsBiometricTemporarilyOffKey;
 import static com.akruzen.checklance.constants.Variables.getLaunchedBefore;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +23,10 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
@@ -30,6 +36,7 @@ import com.google.android.material.floatingactionbutton.ExtendedFloatingActionBu
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.List;
+import java.util.concurrent.Executor;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
     NavigationView navigationView;
     TextView headingTextView;
     ImageView refreshImageView;
-    boolean cardSetupComplete = false;
+    boolean cardSetupComplete = false, biometricAuth = false, needsAuth;
+    BiometricPrompt biometricPrompt;
 
 
     @Override
@@ -54,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         // Object Creation
         tinyDB = new TinyDB(this);
+        needsAuth = tinyDB.getInt(getBiometricKey()) == 1;
+        setContentView(R.layout.activity_main);
         // Find View
         drawerLayout = findViewById(R.id.drawerLayout);
         navigationView = findViewById(R.id.navigationView);
@@ -86,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void refreshImageViewTapped (View view) {
+        tinyDB.putBoolean(getIsBiometricTemporarilyOffKey(), true);
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
@@ -105,16 +115,32 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpCardViews() {
         cardSetupComplete = true;
-        if (tinyDB.getBoolean(getLaunchedBefore())) {
-            if (jsonFileExists(this)) {
-                List<BankDetails> detailsList = readJSONFile(this);
-                for (BankDetails detail : detailsList) {
-                    addCardViewToLayout(this, detail, showCardLinearLayout);
+        if (tinyDB.getBoolean(getIsBiometricTemporarilyOffKey())) {
+            // This indicates that the theme has been changed, so no need to authenticate
+            tinyDB.putBoolean(getIsBiometricTemporarilyOffKey(), false);
+            /* Since we have already asserted cardSetupComplete as true,
+            it will need to be manually reloaded */
+            populateCardView();
+        } else {
+            if (!biometricAuth) {
+                // If already authenticated, no need to authenticate again
+                if (needsAuth) {
+                    // Set up fingerprint authentication if user has enabled fingerprint
+                    addFingerprintAuth();
+                    final BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
+                            .setTitle("Fingerprint Required")
+                            .setDescription("Unlock Checklance with your fingerprint")
+                            .setNegativeButtonText("Cancel")
+                            .build();
+                    biometricPrompt.authenticate(promptInfo);
+                } else {
+                    // If user has disabled fingerprint reader, consider fingerprint authenticated
+                    biometricAuth = true;
                 }
-                setVisibilities(true);
-            } else {
-                setVisibilities(false);
             }
+        }
+        if (tinyDB.getBoolean(getLaunchedBefore()) && biometricAuth) {
+            populateCardView();
         } else {
             tinyDB.putBoolean(getLaunchedBefore(), true);
         }
@@ -139,6 +165,41 @@ public class MainActivity extends AppCompatActivity {
             layoutParams.gravity = Gravity.CENTER;
         }
         scrollLinearLayout.setLayoutParams(layoutParams);
+    }
+
+    private void populateCardView() {
+        if (jsonFileExists(this)) {
+            List<BankDetails> detailsList = readJSONFile(this);
+            for (BankDetails detail : detailsList) {
+                addCardViewToLayout(this, detail, showCardLinearLayout);
+            }
+            setVisibilities(true);
+        } else {
+            setVisibilities(false);
+        }
+    }
+
+    private void addFingerprintAuth() {
+        // creating a variable for our Executor
+        Executor executor = ContextCompat.getMainExecutor(this);
+        biometricPrompt = new BiometricPrompt(
+                MainActivity.this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+            }
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                biometricAuth = true;
+                setUpCardViews();
+            }
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+            }
+        }
+        );
     }
 
 }

@@ -3,6 +3,7 @@ package com.akruzen.checklance.constants;
 import static com.akruzen.checklance.constants.Variables.getJsonFileName;
 import static com.akruzen.checklance.constants.Variables.getThemeKey;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
@@ -18,9 +19,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.biometric.BiometricManager;
+import androidx.biometric.BiometricPrompt;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import com.akruzen.checklance.MainActivity;
 import com.akruzen.checklance.R;
@@ -40,6 +46,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.concurrent.Executor;
 
 public class Methods {
 
@@ -239,6 +246,18 @@ public class Methods {
         fadeIn.setDuration(500);
         fadeIn.setFillAfter(true);
         textView.startAnimation(fadeIn);
+    }
+
+    public static boolean isBiometricExist(Context context) {
+        BiometricManager biometricManager = androidx.biometric.BiometricManager.from(context);
+        switch (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
+            case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
+            case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
+            case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
+                return false;
+            default:
+                return true;
+        }
     }
 
 }

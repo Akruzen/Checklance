@@ -9,6 +9,9 @@ public class Variables {
 
     // TinyDB Keys
     private static final String themeKey = "themeKey"; // 0: Light, 1: System, 2: Dark
+    private static final String biometricKey = "biometricKey"; // 0: No, 1: Yes, -1: No biometric
+    private static final String isBiometricTemporarilyOffKey = "isBiometricTemporarilyOff";
+    // true: biometric is temporarily off, turn on immediately and set variable false
     private static final String launchedBefore = "launchedBefore"; // Has the app been launched first time?
     private static final String jsonFileName = "output.json";
     // public static int theme = 1; // 0: Light, 1: System, 2: Dark
@@ -42,5 +45,13 @@ public class Variables {
 
     public static String getOtherBankStr() {
         return otherBankStr;
+    }
+
+    public static String getBiometricKey() {
+        return biometricKey;
+    }
+
+    public static String getIsBiometricTemporarilyOffKey() {
+        return isBiometricTemporarilyOffKey;
     }
 }

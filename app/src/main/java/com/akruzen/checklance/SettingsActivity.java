@@ -1,6 +1,9 @@
 package com.akruzen.checklance;
 
 import static com.akruzen.checklance.constants.Methods.applyCustomTheme;
+import static com.akruzen.checklance.constants.Methods.isBiometricExist;
+import static com.akruzen.checklance.constants.Variables.getBiometricKey;
+import static com.akruzen.checklance.constants.Variables.getIsBiometricTemporarilyOffKey;
 import static com.akruzen.checklance.constants.Variables.getThemeKey;
 
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.akruzen.checklance.lib.TinyDB;
 import com.google.android.material.button.MaterialButtonToggleGroup;
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -22,17 +26,20 @@ public class SettingsActivity extends AppCompatActivity {
     TinyDB tinyDB;
     int theme = 0;
     Button applyButton;
+    MaterialSwitch biometricSwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
+        Log.i("SettingsActivity", "onCreate");
         // Object Creation
         tinyDB = new TinyDB(this);
         // Find View
         themeToggleBtn = findViewById(R.id.themeToggleButton);
         themeDescTxtView = findViewById(R.id.themeDescTxt);
         applyButton = findViewById(R.id.setThemeBtn);
+        biometricSwitch = findViewById(R.id.biometricSwitch);
         // Set variable values
         theme = tinyDB.getInt(getThemeKey());
         // Method Calls
@@ -51,6 +58,9 @@ public class SettingsActivity extends AppCompatActivity {
 
     public void applyThemeTapped (View view) {
         tinyDB.putInt(getThemeKey(), theme);
+        if (biometricSwitch.isChecked()) {
+            tinyDB.putBoolean(getIsBiometricTemporarilyOffKey(), true);
+        }
         applyCustomTheme(tinyDB);
         setApplyButtonState();
         String themeStr = theme == 1 ? "System" : theme == 0 ? "Light" : "Dark";
@@ -71,6 +81,15 @@ public class SettingsActivity extends AppCompatActivity {
     }
 
     private void setToggleBtnOnClick() {
+        biometricSwitch.setEnabled(isBiometricExist(this));
+        biometricSwitch.setChecked(tinyDB.getInt(getBiometricKey()) == 1);
+        biometricSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isBiometricExist(getApplicationContext())) {
+                tinyDB.putInt(getBiometricKey(), isChecked ? 1 : 0);
+            } else {
+                Toast.makeText(SettingsActivity.this, "Biometric Not Available", Toast.LENGTH_SHORT).show();
+            }
+        });
         themeToggleBtn.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
             // IMPORTANT: This method is also called when a button unchecks itself
             if (isChecked) {
