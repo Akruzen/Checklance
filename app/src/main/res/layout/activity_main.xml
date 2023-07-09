@@ -124,13 +124,78 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/permissionLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginVertical="8dp"
+                    android:orientation="vertical">
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:padding="8dp">
+
+
+                            <ImageView
+                                android:id="@+id/imageView2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="3"
+                                app:srcCompat="@drawable/outline_warning_amber_24" />
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginVertical="8dp"
+                                android:layout_weight="1"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/textView10"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="WARNING:"
+                                    android:textSize="@dimen/large_body"
+                                    android:textStyle="bold" />
+
+                                <TextView
+                                    android:id="@+id/textView11"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginVertical="8dp"
+                                    android:text="SMS Permission not granted. You may create new accounts, but the balancecs will not be updated." />
+
+                                <Button
+                                    android:id="@+id/button"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end"
+                                    android:onClick="requestPermissions"
+                                    android:text="Fix it" />
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/showCardLinearLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingVertical="16dp"
                     android:gravity="center_horizontal"
                     android:orientation="vertical"
-                    android:visibility="gone"/>
+                    android:paddingVertical="16dp"
+                    android:visibility="gone" />
 
             </LinearLayout>
         </ScrollView>

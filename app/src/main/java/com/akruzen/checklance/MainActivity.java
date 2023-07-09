@@ -2,19 +2,27 @@ package com.akruzen.checklance;
 
 import static com.akruzen.checklance.constants.Methods.addCardViewToLayout;
 import static com.akruzen.checklance.constants.Methods.applyCustomTheme;
+import static com.akruzen.checklance.constants.Methods.checkSMSPermission;
 import static com.akruzen.checklance.constants.Methods.doInitSetup;
 import static com.akruzen.checklance.constants.Methods.fadeOutAndReplaceText;
 import static com.akruzen.checklance.constants.Methods.jsonFileExists;
 import static com.akruzen.checklance.constants.Methods.readJSONFile;
+import static com.akruzen.checklance.constants.Methods.requestSmsPermission;
 import static com.akruzen.checklance.constants.Methods.saveAsJSONFile;
+import static com.akruzen.checklance.constants.Variables.SMS_PERMISSION_REQUEST_CODE;
 import static com.akruzen.checklance.constants.Variables.getBiometricKey;
 import static com.akruzen.checklance.constants.Variables.getIsBiometricTemporarilyOffKey;
 import static com.akruzen.checklance.constants.Variables.getLaunchedBefore;
+import static com.akruzen.checklance.constants.Variables.getSmsPermissionKey;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -24,14 +32,17 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.biometric.BiometricPrompt;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.akruzen.checklance.classes.BankDetails;
 import com.akruzen.checklance.lib.TinyDB;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
@@ -43,7 +54,7 @@ import java.util.regex.Pattern;
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
-    LinearLayout desertLinearLayout, showCardLinearLayout, scrollLinearLayout;
+    LinearLayout desertLinearLayout, showCardLinearLayout, scrollLinearLayout, permissionLinearLayout;
     ExtendedFloatingActionButton cornerFAB;
     TinyDB tinyDB;
     NavigationView navigationView;
@@ -57,6 +68,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (!cardSetupComplete) setUpCardViews();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == SMS_PERMISSION_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED &&
+                    grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                tinyDB.putBoolean(getSmsPermissionKey(), checkSMSPermission(this)); // true
+            } else {
+                tinyDB.putBoolean(getSmsPermissionKey(), checkSMSPermission(this)); // false
+                AlertDialog alertDialog = new MaterialAlertDialogBuilder(this).create();
+                alertDialog.setTitle("Permissions Required");
+                alertDialog.setMessage("SMS Permission is required for proper functioning of the app");
+                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Go to Settings",
+                        (dialog, which) -> {
+                            dialog.dismiss();
+                            // Open the app settings
+                            Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                            Uri uri = Uri.fromParts("package", getPackageName(), null);
+                            intent.setData(uri);
+                            startActivity(intent);
+                        });
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "Later", (dialog, which) -> dialog.dismiss());
+                alertDialog.show();
+            }
+        }
     }
 
     @Override
@@ -75,9 +113,11 @@ public class MainActivity extends AppCompatActivity {
         cornerFAB = findViewById(R.id.cornerFAB);
         headingTextView = findViewById(R.id.headingTextView);
         refreshImageView = findViewById(R.id.refreshImageView);
+        permissionLinearLayout = findViewById(R.id.permissionLinearLayout);
         // Method Calls
         setUpNavigationDrawer();
         doInitSetup(this);
+        requestPermissions(null);
         applyCustomTheme(tinyDB);
         new Handler().postDelayed(() -> {
             fadeOutAndReplaceText("Checklance", headingTextView);
@@ -87,6 +127,16 @@ public class MainActivity extends AppCompatActivity {
     public void openNavDrawer (View view) {
         drawerLayout.setDrawerTitle(GravityCompat.START, "Options");
         drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    public void requestPermissions (View view) {
+        if (!checkSMSPermission(this)) {
+            permissionLinearLayout.setVisibility(View.VISIBLE);
+            requestSmsPermission(this);
+        } else {
+            permissionLinearLayout.setVisibility(View.GONE);
+        }
+        tinyDB.putBoolean(getSmsPermissionKey(), checkSMSPermission(this));
     }
 
     public void addBankFAB (View view) {

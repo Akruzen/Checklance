@@ -13,8 +13,10 @@ public class Variables {
     private static final String isBiometricTemporarilyOffKey = "isBiometricTemporarilyOff";
     // true: biometric is temporarily off, turn on immediately and set variable false
     private static final String launchedBefore = "launchedBefore"; // Has the app been launched first time?
+    private static final String smsPermissionKey = "smsPermissionKey"; // true: Granted, false: Denied
     private static final String jsonFileName = "output.json";
     // public static int theme = 1; // 0: Light, 1: System, 2: Dark
+    public static final int SMS_PERMISSION_REQUEST_CODE = 100;
     private static final String otherBankStr = "Other...";
     private static final List<String> bankList = Arrays.asList(
             "State Bank of India", "Punjab National Bank", "Bank of Baroda", "ICICI Bank", "HDFC Bank",
@@ -53,5 +55,9 @@ public class Variables {
 
     public static String getIsBiometricTemporarilyOffKey() {
         return isBiometricTemporarilyOffKey;
+    }
+
+    public static String getSmsPermissionKey() {
+        return smsPermissionKey;
     }
 }

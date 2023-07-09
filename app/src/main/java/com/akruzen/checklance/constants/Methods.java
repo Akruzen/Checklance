@@ -1,13 +1,17 @@
 package com.akruzen.checklance.constants;
 
+import static androidx.core.app.ActivityCompat.shouldShowRequestPermissionRationale;
+import static com.akruzen.checklance.constants.Variables.SMS_PERMISSION_REQUEST_CODE;
 import static com.akruzen.checklance.constants.Variables.getJsonFileName;
 import static com.akruzen.checklance.constants.Variables.getThemeKey;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,6 +29,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.biometric.BiometricManager;
 import androidx.biometric.BiometricPrompt;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -258,6 +263,34 @@ public class Methods {
             default:
                 return true;
         }
+    }
+
+    public static boolean checkSMSPermission(Context context) {
+        return ContextCompat.checkSelfPermission(context, Manifest.permission.RECEIVE_SMS) == PackageManager.PERMISSION_GRANTED &&
+                ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public static void requestSmsPermission(Activity activity) {
+        // Check if the user has previously denied the permissions
+        boolean shouldExplain = shouldShowRequestPermissionRationale(activity, Manifest.permission.RECEIVE_SMS) ||
+                shouldShowRequestPermissionRationale(activity, Manifest.permission.READ_SMS);
+
+        if (shouldExplain) {
+            // Display an explanation to the user before requesting permissions
+            ActivityCompat.requestPermissions(
+                    activity,
+                    new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS},
+                    SMS_PERMISSION_REQUEST_CODE
+            );
+        } else {
+            // No need for explanation, directly request the permissions
+            ActivityCompat.requestPermissions(
+                    activity,
+                    new String[]{Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_SMS},
+                    SMS_PERMISSION_REQUEST_CODE
+            );
+        }
+
     }
 
 }
