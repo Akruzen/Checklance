@@ -155,9 +155,12 @@ public class MainActivity extends AppCompatActivity {
         navigationView.setNavigationItemSelectedListener(item -> {
             int id = item.getItemId();
             Intent intent = new Intent(this, SettingsActivity.class); // Default
-            if (id == R.id.menu_settings) {
-                drawerLayout.close();
+            /*if (id == R.id.menu_settings) {
+                drawerLayout.close(); // This is already the default behavior
+            } else */if (id == R.id.menu_about) {
+                intent = new Intent(this, AboutActivity.class);
             }
+            drawerLayout.close();
             startActivity(intent);
             return true;
         });

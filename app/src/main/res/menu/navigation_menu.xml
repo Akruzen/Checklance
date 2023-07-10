@@ -5,10 +5,10 @@
         android:title="Settings"
         android:icon="@drawable/outline_settings_24"/>
 
-    <item
+    <!--<item
         android:id="@+id/menu_privacy"
-        android:title="Privacy"
-        android:icon="@drawable/outline_privacy_tip_24"/>
+        android:title="Privacy Policy"
+        android:icon="@drawable/outline_privacy_tip_24"/>-->
 
     <item
         android:id="@+id/menu_about"
