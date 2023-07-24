@@ -6,7 +6,7 @@ Checklance is an Android application which helps to keep track of your bank bala
 
 ## Screenshots
 
-<img src="/doc/ss1.png?raw=true" width=180 height=320>
+<img src="/doc/ss1.png?raw=true" width=200 height=320>
 
 
 ## Installation
